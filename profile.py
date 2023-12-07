@@ -40,10 +40,6 @@ pc.defineParameter(
     portal.ParameterType.INTEGER,3,
     longDescription="Number of nodes in your kubernetes cluster.  Should be either 1, or >= 3.")
 pc.defineParameter(
-    "nodeType","Hardware Type",
-    portal.ParameterType.NODETYPE,"",
-    longDescription="A specific hardware type to use for each node.  Cloudlab clusters all have machines of specific types.  When you set this field to a value that is a specific hardware type, you will only be able to instantiate this profile on clusters with machines of that type.  If unset, when you instantiate the profile, the resulting experiment may have machines of any available type allocated.")
-pc.defineParameter(
     "linkSpeed","Experiment Link Speed",
     portal.ParameterType.INTEGER,0,
     [(0,"Any"),(1000000,"1Gb/s"),(10000000,"10Gb/s"),(25000000,"25Gb/s"),(40000000,"40Gb/s"),(100000000,"100Gb/s")],
@@ -358,9 +354,9 @@ nodes = dict({})
 sharedvlans = []
 for i in range(0,params.nodeCount):
     nodename = "node-%d" % (i,)
-    node = RSpec.RawPC(nodename)
-    if params.nodeType:
-        node.hardware_type = params.nodeType
+    node = RSpec.XenVM(nodename) 
+    node.cores = 8
+    node.ram = 8192
     if params.diskImage:
         node.disk_image = params.diskImage
     j = 0
