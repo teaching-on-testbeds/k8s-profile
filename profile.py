@@ -356,7 +356,7 @@ for i in range(0,params.nodeCount):
     nodename = "node-%d" % (i,)
     node = RSpec.XenVM(nodename) 
     node.cores = 8
-    node.ram = 8192
+    node.ram = 1024
     node.exclusive = True
     if params.diskImage:
         node.disk_image = params.diskImage
